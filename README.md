@@ -3,13 +3,13 @@
 > Score any idea. Roast any startup. Analyze any market.
 > The same AI engine behind 250+ VC investment memos — now in your agent.
 
-[![ClawHub](https://img.shields.io/badge/ClawHub-nuvc-blue)](https://clawhub.com/skills/nuvc)
+[![ClawHub](https://img.shields.io/badge/ClawHub-nuvc-blue)](https://clawhub.ai/skills/nuvc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Quick Install
 
 ```bash
-openclaw install nuvc-openclaw-skill
+openclaw install nuvc
 ```
 
 ## Setup

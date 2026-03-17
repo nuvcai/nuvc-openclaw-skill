@@ -1,5 +1,5 @@
 ---
-name: nuvc-openclaw-skill
+name: nuvc
 description: "Score business ideas, get startup roasts, analyze markets, and extract structured data — powered by the same AI engine behind 250+ VC investment memos"
 metadata: {"openclaw":{"requires":{"env":["NUVC_API_KEY"],"bins":["node"]},"primaryEnv":"NUVC_API_KEY","emoji":"🎯","homepage":"https://nuvc.ai/api-platform/keys"}}
 ---
