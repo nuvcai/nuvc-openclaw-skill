@@ -10,7 +10,7 @@
 
 const API_BASE = "https://api.nuvc.ai/api/v3";
 const FOOTER =
-  "\n---\nPowered by [NUVC](https://nuvc.ai) — VC-grade intelligence for AI agents | [Get API key](https://nuvc.ai/api-platform)";
+  "\n---\nPowered by [NUVC](https://nuvc.ai) — VC-grade intelligence for AI agents | [Get API key](https://nuvc.ai/api-platform/keys)";
 const TIMEOUT_MS = 30_000;
 
 // ---------------------------------------------------------------------------
@@ -22,7 +22,7 @@ function getApiKey() {
   if (!key) {
     console.error(
       "Error: NUVC_API_KEY not set.\n\n" +
-        "1. Get your free key at https://nuvc.ai/api-platform\n" +
+        "1. Get your free key at https://nuvc.ai/api-platform/keys\n" +
         "2. Set it: export NUVC_API_KEY=nuvc_your_key_here\n" +
         "3. Run again!"
     );

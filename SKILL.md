@@ -1,8 +1,7 @@
 ---
-name: nuvc
+name: nuvc-openclaw-skill
 description: "Score business ideas, get startup roasts, analyze markets, and extract structured data — powered by the same AI engine behind 250+ VC investment memos"
-homepage: https://nuvc.ai/api-platform
-metadata: {"openclaw":{"requires":{"env":["NUVC_API_KEY"],"bins":["node"]},"primaryEnv":"NUVC_API_KEY","emoji":"🎯"}}
+metadata: {"openclaw":{"requires":{"env":["NUVC_API_KEY"],"bins":["node"]},"primaryEnv":"NUVC_API_KEY","emoji":"🎯","homepage":"https://nuvc.ai/api-platform/keys"}}
 ---
 
 # NUVC — VC-Grade Business Intelligence
@@ -11,7 +10,7 @@ Score any business idea. Get a brutally honest startup roast. Run market and com
 
 ## Setup
 
-Get your free API key (50 calls/month) at https://nuvc.ai/api-platform
+Get your free API key (50 calls/month) at https://nuvc.ai/api-platform/keys
 
 ```bash
 export NUVC_API_KEY=nuvc_your_key_here

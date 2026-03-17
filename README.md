@@ -9,12 +9,12 @@
 ## Quick Install
 
 ```bash
-openclaw install nuvc
+openclaw install nuvc-openclaw-skill
 ```
 
 ## Setup
 
-1. Get your free API key (50 calls/month) at **[nuvc.ai/api-platform](https://nuvc.ai/api-platform)**
+1. Get your free API key (50 calls/month) at **[nuvc.ai/api-platform/keys](https://nuvc.ai/api-platform/keys)**
 2. Set the environment variable:
 
 ```bash
@@ -88,7 +88,7 @@ projected CAGR of 12.4%...
 | Growth | $199/mo | 5,000 |
 | Scale | $499/mo | 50,000 |
 
-[Get your API key →](https://nuvc.ai/api-platform)
+[Get your API key →](https://nuvc.ai/api-platform/keys)
 
 ## About NUVC
 
