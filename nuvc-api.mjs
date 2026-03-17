@@ -135,23 +135,26 @@ async function cmdScore(args) {
     console.log(`${emoji} **Overall: ${overall} / 10** — ${verdict}\n`);
   }
 
-  // scores is data.scores — dimension entries live at data.scores directly,
-  // not at data.scores.scores. Filter out top-level metadata fields.
-  const entries = Object.entries(scores).filter(
-    ([k]) => k !== "overall_score" && k !== "summary" && k !== "raw"
-  );
-  if (entries.length > 0) {
-    console.log("| Dimension | Score | Rationale |");
-    console.log("|-----------|-------|-----------|");
-    for (const [key, val] of entries) {
-      const label = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-      if (typeof val === "object" && val !== null) {
-        console.log(`| ${label} | ${val.score ?? "—"}/10 | ${val.rationale ?? ""} |`);
-      } else {
-        console.log(`| ${label} | ${val}/10 | |`);
+  // The LLM returns: { scores: { "Dimension": {score, rationale}, ... }, overall_score, summary }
+  // So data.scores = full LLM JSON, and data.scores.scores = the dimension breakdown.
+  const dimensions = scores.scores || scores;
+  if (typeof dimensions === "object" && !Array.isArray(dimensions)) {
+    const entries = Object.entries(dimensions).filter(
+      ([k]) => k !== "overall_score" && k !== "summary" && k !== "raw"
+    );
+    if (entries.length > 0) {
+      console.log("| Dimension | Score | Rationale |");
+      console.log("|-----------|-------|-----------|");
+      for (const [key, val] of entries) {
+        const label = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        if (typeof val === "object" && val !== null) {
+          console.log(`| ${label} | ${val.score ?? "—"}/10 | ${val.rationale ?? ""} |`);
+        } else {
+          console.log(`| ${label} | ${val}/10 | |`);
+        }
       }
+      console.log("");
     }
-    console.log("");
   }
 
   if (scores.summary) {
@@ -235,18 +238,20 @@ async function cmdExtract(args) {
   }
 
   const data = res.data || res;
+  // ai_extract returns { extracted: {...fields...}, extraction_type, usage }
+  const extracted = data.extracted || data;
 
   console.log("## NUVC Structured Extraction\n");
 
-  if (typeof data === "object" && data !== null) {
-    for (const [key, val] of Object.entries(data)) {
+  if (typeof extracted === "object" && extracted !== null) {
+    for (const [key, val] of Object.entries(extracted)) {
       if (val === null || val === undefined) continue;
       const label = key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
       const display = Array.isArray(val) ? val.join(", ") : String(val);
       console.log(`**${label}:** ${display}`);
     }
   } else {
-    console.log(data);
+    console.log(extracted);
   }
 
   console.log(FOOTER);
@@ -261,18 +266,27 @@ async function cmdModels(args) {
   }
 
   const data = res.data || res;
-  const models = Array.isArray(data) ? data : data.models || [];
 
   console.log("## NUVC Available Models\n");
 
-  if (models.length === 0) {
-    console.log(JSON.stringify(data, null, 2));
-  } else {
-    console.log("| Model | Provider | Description |");
-    console.log("|-------|----------|-------------|");
-    for (const m of models) {
-      console.log(`| ${m.id || m.name || "—"} | ${m.provider || "—"} | ${m.description || ""} |`);
+  // Providers (health + availability)
+  if (Array.isArray(data.providers) && data.providers.length > 0) {
+    console.log("### Providers\n");
+    console.log("| Provider | Available | Healthy |");
+    console.log("|----------|-----------|---------|");
+    for (const p of data.providers) {
+      console.log(`| ${p.name} | ${p.available ? "✓" : "✗"} | ${p.healthy ? "✓" : "✗"} |`);
     }
+    console.log("");
+  }
+
+  // Embedding models
+  if (Array.isArray(data.embedding_models) && data.embedding_models.length > 0) {
+    console.log(`**Embedding models:** ${data.embedding_models.join(", ")}\n`);
+  }
+
+  if (data.preference) {
+    console.log(`**Preference order:** ${Array.isArray(data.preference) ? data.preference.join(" → ") : data.preference}\n`);
   }
 
   console.log(FOOTER);
